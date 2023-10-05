@@ -24,11 +24,11 @@
     background-size: cover;
 }
 
-#todo-form {
+#task-form {
     padding: 32px 32px 0;
 }
 
-#todo-form input {
+#task-form input {
     padding: 12px;
     margin-right: 12px;
     width: 225px;
@@ -43,7 +43,7 @@
     outline: none;
 }
 
-#todo-form button {
+#task-form button {
     padding: 12px 32px;
 
     border-radius: 4px;
