@@ -28,12 +28,21 @@ form.addEventListener('submit', (e) => {
 });
 
 function saveToLocalStorage(saveData) {
-  let saveFromLocalStorage = [];
+  let savedFromLocalStorage = getSaveFromLocalStorage();
 
-  //   if (localStorage.getItem('tasks') === null) {
-  //     saveFromLocalStorage = [];
-  //   } else {
-  saveFromLocalStorage.push(saveData);
-  //   }
-  localStorage.setItem('tasks', JSON.stringify(saveFromLocalStorage));
+  savedFromLocalStorage.push(saveData);
+
+  localStorage.setItem('tasks', JSON.stringify(savedFromLocalStorage));
+}
+
+function getSaveFromLocalStorage() {
+  let savedFromLocalStorage;
+
+  if (localStorage.getItem('tasks') === null) {
+    savedFromLocalStorage = [];
+  } else {
+    savedFromLocalStorage = JSON.parse(localStorage.getItem('tasks'));
+  }
+
+  return savedFromLocalStorage;
 }
