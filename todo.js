@@ -22,6 +22,18 @@ form.addEventListener('submit', (e) => {
   });
 
   taskName.appendChild(newTask);
+  saveToLocalStorage(value);
 
   input.value = '';
 });
+
+function saveToLocalStorage(saveData) {
+  let saveFromLocalStorage = [];
+
+  //   if (localStorage.getItem('tasks') === null) {
+  //     saveFromLocalStorage = [];
+  //   } else {
+  saveFromLocalStorage.push(saveData);
+  //   }
+  localStorage.setItem('tasks', JSON.stringify(saveFromLocalStorage));
+}
