@@ -2,30 +2,44 @@ const form = document.getElementById('task-form');
 const input = document.getElementById('task-input');
 const taskName = document.getElementById('task-name');
 
-form.addEventListener('submit', (e) => {
+function displayAllSavedTasks() {
+  const savedFromLocalStorage = getSaveFromLocalStorage();
+  savedFromLocalStorage.forEach((task) => addNewTaskToDisplay(task));
+}
+
+function addNewTaskSubmit(e) {
   e.preventDefault();
   const value = input.value;
 
   if (!value) return;
 
-  const newTask = document.createElement('p');
-  newTask.classList.add('task');
-  newTask.setAttribute('draggable', 'true');
-  newTask.innerHTML = value;
+  addNewTaskToDisplay(value);
 
-  newTask.addEventListener('dragstart', () => {
-    newTask.classList.add('is-dragging');
-  });
-
-  newTask.addEventListener('dragend', () => {
-    newTask.classList.remove('is-dragging');
-  });
-
-  taskName.appendChild(newTask);
   saveToLocalStorage(value);
 
   input.value = '';
-});
+}
+
+function addNewTaskToDisplay(newTask) {
+  const label = document.createElement('p');
+  label.classList.add('task');
+  label.setAttribute('draggable', 'true');
+  label.innerHTML = newTask;
+
+  label.addEventListener('dragstart', () => {
+    label.classList.add('is-dragging');
+  });
+
+  label.addEventListener('dragend', () => {
+    label.classList.remove('is-dragging');
+  });
+
+  taskName.appendChild(label);
+}
+
+// form.addEventListener('submit', (e) => {
+
+// });
 
 function saveToLocalStorage(saveData) {
   let savedFromLocalStorage = getSaveFromLocalStorage();
@@ -46,3 +60,6 @@ function getSaveFromLocalStorage() {
 
   return savedFromLocalStorage;
 }
+
+form.addEventListener('submit', addNewTaskSubmit);
+document.addEventListener('DOMContentLoaded', displayAllSavedTasks);
