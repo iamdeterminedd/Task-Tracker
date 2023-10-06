@@ -1,6 +1,6 @@
 const form = document.getElementById('task-form');
 const input = document.getElementById('task-input');
-const taskName = document.getElementById('task-name');
+const taskList = document.getElementById('task-list');
 
 function displayAllSavedTasks() {
   const savedFromLocalStorage = getSaveFromLocalStorage();
@@ -36,7 +36,7 @@ function addNewTaskToDisplay(newTask) {
     label.classList.remove('is-dragging');
   });
 
-  taskName.appendChild(label);
+  taskList.appendChild(label);
 }
 
 function createRemoveButton(classes) {
@@ -51,6 +51,26 @@ function createIcon(classes) {
   const icon = document.createElement('i');
   icon.className = classes;
   return icon;
+}
+
+function onClickTask(e) {
+  if (e.target.parentElement.classList.contains('remove-task')) {
+    removeTask(e.target.parentElement.parentElement);
+  }
+}
+
+function removeTask(removeTask) {
+  if (confirm('Are you sure?')) {
+    removeTask.remove();
+    removeTaskFromLocalStorage(removeTask.textContent);
+  }
+}
+
+function removeTaskFromLocalStorage(removeTask) {
+  let taskFromLocalStorage = getSaveFromLocalStorage();
+  taskFromLocalStorage = taskFromLocalStorage.filter((i) => i !== removeTask);
+
+  localStorage.setItem('tasks', JSON.stringify(taskFromLocalStorage));
 }
 
 function saveToLocalStorage(saveData) {
@@ -74,4 +94,5 @@ function getSaveFromLocalStorage() {
 }
 
 form.addEventListener('submit', addNewTaskSubmit);
+taskList.addEventListener('click', onClickTask);
 document.addEventListener('DOMContentLoaded', displayAllSavedTasks);
