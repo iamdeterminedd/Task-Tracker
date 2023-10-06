@@ -22,7 +22,7 @@ function addNewTaskSubmit(e) {
 
 function addNewTaskToDisplay(newTask) {
   const label = document.createElement('p');
-  const button = createRemoveButton('remove-task btn-remove');
+  const button = createRemoveButton('remove-task btn-remove txt-red');
   label.classList.add('task');
   label.setAttribute('draggable', 'true');
   label.innerHTML = newTask;
