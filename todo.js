@@ -22,9 +22,11 @@ function addNewTaskSubmit(e) {
 
 function addNewTaskToDisplay(newTask) {
   const label = document.createElement('p');
+  const button = createRemoveButton('remove-task btn-remove');
   label.classList.add('task');
   label.setAttribute('draggable', 'true');
   label.innerHTML = newTask;
+  label.appendChild(button);
 
   label.addEventListener('dragstart', () => {
     label.classList.add('is-dragging');
@@ -37,9 +39,19 @@ function addNewTaskToDisplay(newTask) {
   taskName.appendChild(label);
 }
 
-// form.addEventListener('submit', (e) => {
+function createRemoveButton(classes) {
+  const button = document.createElement('button');
+  button.className = classes;
+  const icon = createIcon('fa-solid fa-xmark');
+  button.appendChild(icon);
+  return button;
+}
 
-// });
+function createIcon(classes) {
+  const icon = document.createElement('i');
+  icon.className = classes;
+  return icon;
+}
 
 function saveToLocalStorage(saveData) {
   let savedFromLocalStorage = getSaveFromLocalStorage();
