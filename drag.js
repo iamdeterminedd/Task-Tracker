@@ -1,5 +1,8 @@
 const draggables = document.querySelectorAll('.task');
 const droppables = document.querySelectorAll('.task-column');
+const todoHeading = document.querySelector('.todo .heading').textContent;
+const doingHeading = document.querySelector('.doing .heading').textContent;
+const doneHeading = document.querySelector('.done .heading').textContent;
 
 draggables.forEach((task) => {
   task.addEventListener('dragstart', () => {
@@ -11,6 +14,11 @@ draggables.forEach((task) => {
 });
 
 droppables.forEach((zone) => {
+  // console.log(zone.textContent);
+
+  // if (zone.textContent.includes(todoHeading)) {
+  //   console.log('hello!');
+  // }
   zone.addEventListener('dragover', (e) => {
     e.preventDefault();
 

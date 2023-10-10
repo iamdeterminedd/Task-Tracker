@@ -1,6 +1,7 @@
 const form = document.getElementById('task-form');
 const input = document.getElementById('task-input');
 const taskList = document.getElementById('task-list');
+let taskObject = [];
 
 function displayAllSavedTasks() {
   const savedFromLocalStorage = getSaveFromLocalStorage();
@@ -14,7 +15,6 @@ function addNewTaskSubmit(e) {
   if (!value) return;
 
   addNewTaskToDisplay(value);
-
   saveToLocalStorage(value);
 
   input.value = '';
@@ -23,6 +23,15 @@ function addNewTaskSubmit(e) {
 function addNewTaskToDisplay(newTask) {
   const label = document.createElement('p');
   const button = createRemoveButton('remove-task btn-remove txt-red');
+
+  // const createTask = {
+  //   id: taskObject.length + 1,
+  //   newTask,
+  //   status: 'ToDo',
+  // };
+
+  // taskObject.push(createTask);
+
   label.classList.add('task');
   label.setAttribute('draggable', 'true');
   label.innerHTML = newTask;
