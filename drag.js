@@ -14,11 +14,23 @@ draggables.forEach((task) => {
 });
 
 droppables.forEach((zone) => {
-  // console.log(zone.textContent);
+  zone.addEventListener('drop', (e) => {
+    e.preventDefault();
 
-  // if (zone.textContent.includes(todoHeading)) {
-  //   console.log('hello!');
-  // }
+    switch (true) {
+      case zone.textContent.includes(todoHeading):
+        console.log('hello, todo!');
+        break;
+      case zone.textContent.includes(doingHeading):
+        console.log('hello, doing!');
+        // moveTask
+        break;
+      case zone.textContent.includes(doneHeading):
+        console.log('hello, done!');
+        break;
+    }
+  });
+
   zone.addEventListener('dragover', (e) => {
     e.preventDefault();
 
