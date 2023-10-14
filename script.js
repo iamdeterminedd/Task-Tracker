@@ -98,21 +98,23 @@ function addNewTaskSubmit(e) {
 
   if (!value) return;
 
-  // const newTask ={
-  //   id:
-  // }
+  const newTask = {
+    id: savedFromLocalStorage.length + 1,
+    value,
+    status: 'ToDo',
+  };
 
-  addNewTaskToDisplay(value);
-  saveToLocalStorage(value);
+  addNewTaskToDisplay();
+  saveToLocalStorage(newTask);
 
   input.value = '';
 }
 
-function addNewTaskToDisplay(newTask) {
+function addNewTaskToDisplay() {
   const columns = {
-    ToDo: document.getElementById('todo-column'),
-    Doing: document.getElementById('doing-column'),
-    Done: document.getElementById('done-column'),
+    ToDo: document.getElementsByClassName('task-column todo'),
+    Doing: document.getElementsByClassName('task-column doing'),
+    Done: document.getElementsByClassName('task-column done'),
   };
 
   Object.keys(columns).forEach((status) => {
@@ -125,7 +127,7 @@ function addNewTaskToDisplay(newTask) {
 
   label.classList.add('task');
   label.setAttribute('draggable', 'true');
-  label.innerHTML = newTask;
+  //   label.innerHTML = newTask;
   label.appendChild(button);
 
   label.addEventListener('dragstart', () => {
@@ -154,11 +156,13 @@ function createIcon(classes) {
 }
 
 function moveTask(taskId, newStatus, newPosition) {
-  const taskIndex = tasks.findIndex((task) => task.id == taskId);
+  const taskIndex = savedFromLocalStorage.findIndex(
+    (task) => task.id == taskId
+  );
 
   if (taskIndex !== -1) {
-    const movedTask = tasks.splice(taskIndex, 1)[0];
-    tasks.splice(newPosition, 0, movedTask);
+    const movedTask = savedFromLocalStorage.splice(taskIndex, 1)[0];
+    savedFromLocalStorage.splice(newPosition, 0, movedTask);
     movedTask.status = newStatus;
   }
 }
