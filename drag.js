@@ -21,17 +21,17 @@ droppables.forEach((zone) => {
     const taskID = e.dataTransfer.getData('text/plain');
     moveTask(taskID, newStatus, getPositionInList(zone, e.clientY));
 
-    switch (true) {
-      case zone.textContent.includes(todoHeading):
-        console.log('hello, todo!');
-        break;
-      case zone.textContent.includes(doingHeading):
-        console.log('hello, doing!');
-        break;
-      case zone.textContent.includes(doneHeading):
-        console.log('hello, done!');
-        break;
-    }
+    // switch (true) {
+    //   case zone.textContent.includes(todoHeading):
+    //     console.log('hello, todo!');
+    //     break;
+    //   case zone.textContent.includes(doingHeading):
+    //     console.log('hello, doing!');
+    //     break;
+    //   case zone.textContent.includes(doneHeading):
+    //     console.log('hello, done!');
+    //     break;
+    // }
   });
 
   zone.addEventListener('dragover', (e) => {
@@ -67,3 +67,29 @@ const insertAboveTask = (zone, mouseY) => {
 
   return closestTask;
 };
+
+function getPositionInList(zone, mouseY) {
+  const taskInZone = Array.from(
+    zone.querySelectorAll('.task:not(.is-dragging)')
+  );
+
+  return taskInZone.findIndex((task) => {
+    const { top, bottom } = task.getBoundingClientRect();
+    const middle = (top + bottom) / 2;
+    return mouseY < middle;
+  });
+}
+
+function getStatusFromZOne(zone) {
+  switch (true) {
+    case zone.id.includes(todoHeading):
+      console.log('hello, todo!');
+      break;
+    case zone.id.includes(doingHeading):
+      console.log('hello, doing!');
+      break;
+    case zone.id.includes(doneHeading):
+      console.log('hello, done!');
+      break;
+  }
+}
