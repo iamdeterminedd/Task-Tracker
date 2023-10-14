@@ -9,6 +9,11 @@ const taskList = document.getElementById('task-list');
 let tasks = [];
 let savedFromLocalStorage = [];
 
+function displayAllSavedTasks() {
+  const savedFromLocalStorage = getSaveFromLocalStorage();
+  savedFromLocalStorage.forEach((task) => addNewTaskToDisplay(task));
+}
+
 draggables.forEach((task) => {
   task.addEventListener('dragstart', () => {
     task.classList.add('is-dragging');
@@ -87,11 +92,6 @@ function getStatusFromZOne(zone) {
   }
 }
 
-function displayAllSavedTasks() {
-  const savedFromLocalStorage = getSaveFromLocalStorage();
-  savedFromLocalStorage.forEach((task) => addNewTaskToDisplay(task));
-}
-
 function addNewTaskSubmit(e) {
   e.preventDefault();
   const value = input.value;
@@ -109,6 +109,17 @@ function addNewTaskSubmit(e) {
 }
 
 function addNewTaskToDisplay(newTask) {
+  const columns = {
+    ToDo: document.getElementById('todo-column'),
+    Doing: document.getElementById('doing-column'),
+    Done: document.getElementById('done-column'),
+  };
+
+  Object.keys(columns).forEach((status) => {
+    const column = columns[status];
+    column.innerHTML = `<h2>${status}</h2>`;
+  });
+
   const label = document.createElement('p');
   const button = createRemoveButton('remove-task btn-remove txt-red');
 
