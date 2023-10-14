@@ -1,6 +1,7 @@
 const form = document.getElementById('task-form');
 const input = document.getElementById('task-input');
 const taskList = document.getElementById('task-list');
+let tasks = [];
 
 function displayAllSavedTasks() {
   const savedFromLocalStorage = getSaveFromLocalStorage();
@@ -53,6 +54,16 @@ function createIcon(classes) {
   return icon;
 }
 
+function moveTask(taskId, newStatus, newPosition) {
+  const taskIndex = tasks.findIndex((task) => task.id == taskId);
+
+  if (taskIndex !== -1) {
+    const movedTask = tasks.splice(taskIndex, 1)[0];
+    tasks.splice(newPosition, 0, movedTask);
+    movedTask.status = newStatus;
+  }
+}
+
 function onClickTask(e) {
   if (e.target.parentElement.classList.contains('remove-task')) {
     removeTask(e.target.parentElement.parentElement);
@@ -96,3 +107,5 @@ function getSaveFromLocalStorage() {
 form.addEventListener('submit', addNewTaskSubmit);
 taskList.addEventListener('click', onClickTask);
 document.addEventListener('DOMContentLoaded', displayAllSavedTasks);
+
+module.exports = moveTask;

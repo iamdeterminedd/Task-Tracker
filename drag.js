@@ -1,3 +1,4 @@
+const moveTask = require('./todo');
 const draggables = document.querySelectorAll('.task');
 const droppables = document.querySelectorAll('.task-column');
 const todoHeading = document.querySelector('.todo .heading').textContent;
@@ -17,13 +18,16 @@ droppables.forEach((zone) => {
   zone.addEventListener('drop', (e) => {
     e.preventDefault();
 
+    const newStatus = getStatusFromZOne(zone);
+    const taskID = e.dataTransfer.getData('text/plain');
+    moveTask(taskID, newStatus, getPositionInList(zone, e.clientY));
+
     switch (true) {
       case zone.textContent.includes(todoHeading):
         console.log('hello, todo!');
         break;
       case zone.textContent.includes(doingHeading):
         console.log('hello, doing!');
-        // moveTask
         break;
       case zone.textContent.includes(doneHeading):
         console.log('hello, done!');
