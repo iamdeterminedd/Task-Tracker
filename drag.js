@@ -1,4 +1,3 @@
-const moveTask = require('./todo');
 const draggables = document.querySelectorAll('.task');
 const droppables = document.querySelectorAll('.task-column');
 const todoHeading = document.querySelector('.todo .heading').textContent;

@@ -2,6 +2,7 @@ const form = document.getElementById('task-form');
 const input = document.getElementById('task-input');
 const taskList = document.getElementById('task-list');
 let tasks = [];
+let savedFromLocalStorage = [];
 
 function displayAllSavedTasks() {
   const savedFromLocalStorage = getSaveFromLocalStorage();
@@ -13,6 +14,10 @@ function addNewTaskSubmit(e) {
   const value = input.value;
 
   if (!value) return;
+
+  // const newTask ={
+  //   id:
+  // }
 
   addNewTaskToDisplay(value);
   saveToLocalStorage(value);
@@ -85,7 +90,7 @@ function removeTaskFromLocalStorage(removeTask) {
 }
 
 function saveToLocalStorage(saveData) {
-  let savedFromLocalStorage = getSaveFromLocalStorage();
+  savedFromLocalStorage = getSaveFromLocalStorage();
 
   savedFromLocalStorage.push(saveData);
 
@@ -93,8 +98,6 @@ function saveToLocalStorage(saveData) {
 }
 
 function getSaveFromLocalStorage() {
-  let savedFromLocalStorage;
-
   if (localStorage.getItem('tasks') === null) {
     savedFromLocalStorage = [];
   } else {
@@ -107,5 +110,3 @@ function getSaveFromLocalStorage() {
 form.addEventListener('submit', addNewTaskSubmit);
 taskList.addEventListener('click', onClickTask);
 document.addEventListener('DOMContentLoaded', displayAllSavedTasks);
-
-module.exports = moveTask;
