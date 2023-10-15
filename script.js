@@ -147,7 +147,8 @@ function addNewTaskToDisplay(task) {
   label.textContent = `${task.value}`;
   label.appendChild(button);
 
-  label.addEventListener('dragstart', () => {
+  label.addEventListener('dragstart', (e) => {
+    drag(e, task.id);
     label.classList.add('is-dragging');
   });
 
@@ -194,6 +195,10 @@ function createIcon(classes) {
   return icon;
 }
 
+function drag(e, taskId) {
+  e.dataTransfer.setData('text/plain', taskId);
+}
+
 function moveTask(taskId, newStatus, newPosition) {
   const taskIndex = savedFromLocalStorage.findIndex(
     (task) => task.id == taskId
@@ -206,6 +211,7 @@ function moveTask(taskId, newStatus, newPosition) {
 
     // addNewTaskToDisplay(movedTask);
     saveToLocalStorage(savedFromLocalStorage);
+    console.log('hello!');
   }
 
   console.log('Move Task Called');
