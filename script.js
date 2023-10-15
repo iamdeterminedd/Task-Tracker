@@ -126,6 +126,7 @@ function addNewTaskSubmit(e) {
 }
 
 function addNewTaskToDisplay(task) {
+  // addNewTaskToLocalStorage(task);
   // const columns = {
   //   ToDo: document.getElementsByClassName('task-column todo'),
   //   Doing: document.getElementsByClassName('task-column doing'),
@@ -138,48 +139,131 @@ function addNewTaskToDisplay(task) {
   // });
 
   // savedFromLocalStorage.forEach((task) => {
-  const label = document.createElement('p');
-  const button = createRemoveButton('remove-task btn-remove txt-red');
+  // const label = document.createElement('p');
+  // const button = createRemoveButton('remove-task btn-remove txt-red');
 
-  label.classList.add('task');
-  label.setAttribute('draggable', 'true');
-  // label.innerHTML = newTask;
-  label.textContent = `${task.value}`;
-  label.appendChild(button);
+  // label.classList.add('task');
+  // label.setAttribute('draggable', 'true');
+  // // label.innerHTML = newTask;
+  // label.textContent = `${task.value}`;
+  // label.appendChild(button);
 
-  label.addEventListener('dragstart', (e) => {
-    drag(e, task.id);
-    label.classList.add('is-dragging');
-  });
+  // label.addEventListener('dragstart', (e) => {
+  //   drag(e, task.id);
+  //   label.classList.add('is-dragging');
+  // });
 
-  label.addEventListener('dragend', () => {
-    label.classList.remove('is-dragging');
-  });
+  // label.addEventListener('dragend', () => {
+  //   label.classList.remove('is-dragging');
+  // });
 
-  // taskList.appendChild(label);
-  // columns[task.status][0].appendChild(label);
+  // // taskList.appendChild(label);
+  // // columns[task.status][0].appendChild(label);
 
-  const columnId = getColumnId(task.status);
-  const column = document.querySelector(`.task-column.${columnId}`);
-  column.innerHTML = `<h2>${task.status}</h2>`;
-  column.appendChild(label);
-  console.log(columnId);
+  // const columnId = getColumnId(task.status);
+  // const column = document.querySelector(`.task-column.${columnId}`);
+  // column.innerHTML = `<h2>${task.status}</h2>`;
+  // column.appendChild(label);
+  // console.log(columnId);
 
   // });
+
+  const columns = {
+    ToDo: document.querySelector('.task-column.todo'),
+    Doing: document.querySelector('.task-column.doing'),
+    Done: document.querySelector('.task-column.done'),
+  };
+
+  Object.keys(columns).forEach((status) => {
+    const column = columns[status];
+    column.innerHTML = `<h2>${status}</h2>`;
+  });
+
+  savedFromLocalStorage.forEach((task) => {
+    const label = document.createElement('p');
+    const button = createRemoveButton('remove-task btn-remove txt-red');
+
+    label.classList.add('task');
+    label.setAttribute('draggable', 'true');
+    label.textContent = `${task.value}`;
+    label.appendChild(button);
+
+    label.addEventListener('dragstart', (e) => {
+      drag(e, task.id);
+      label.classList.add('is-dragging');
+    });
+
+    label.addEventListener('dragend', () => {
+      label.classList.remove('is-dragging');
+    });
+
+    const column = columns[task.status];
+
+    if (column) {
+      column.appendChild(label);
+    } else {
+      console.log('Column not found', task.status);
+    }
+  });
 }
 
-function getColumnId(status) {
-  switch (status) {
-    case 'ToDo':
-      return 'todo';
-    case 'Doing':
-      return 'doing';
-    case 'Done':
-      return 'done';
-    default:
-      return '';
-  }
+function renderTasks() {
+  const columns = {
+    ToDo: document.querySelector('.task-column.todo'),
+    Doing: document.querySelector('.task-column.doing'),
+    Done: document.querySelector('.task-column.done'),
+  };
+
+  Object.keys(columns).forEach((status) => {
+    const column = columns[status];
+    column.innerHTML = `<h2>${status}</h2>`;
+  });
+
+  savedFromLocalStorage.forEach((task) => {
+    const label = document.createElement('p');
+    const button = createRemoveButton('remove-task btn-remove txt-red');
+
+    label.classList.add('task');
+    label.setAttribute('draggable', 'true');
+    label.textContent = `${task.value}`;
+    label.appendChild(button);
+
+    label.addEventListener('dragstart', (e) => {
+      drag(e, task.id);
+      label.classList.add('is-dragging');
+    });
+
+    label.addEventListener('dragend', () => {
+      label.classList.remove('is-dragging');
+    });
+
+    const column = columns[task.status];
+
+    if (column) {
+      column.appendChild(label);
+    } else {
+      console.log('Column not found', task.status);
+    }
+  });
 }
+
+function addNewTaskToLocalStorage(task) {
+  savedFromLocalStorage.push(task);
+  localStorage.setItem('tasks', JSON.stringify(savedFromLocalStorage));
+}
+
+// function getColumnId(status) {
+//   switch (status) {
+//     case 'ToDo':
+//       return 'ToDo';
+//     case 'Doing':
+//       return 'Doing';
+//     case 'Done':
+//       return 'Done';
+//     default:
+//       return '';
+//   }
+// }
 
 function createRemoveButton(classes) {
   const button = document.createElement('button');
@@ -210,8 +294,10 @@ function moveTask(taskId, newStatus, newPosition) {
     movedTask.status = newStatus;
 
     // addNewTaskToDisplay(movedTask);
+    // renderTasks();
     saveToLocalStorage(savedFromLocalStorage);
-    console.log('hello!');
+    console.log(movedTask);
+    // console.log('hello!');
   }
 
   console.log('Move Task Called');
@@ -253,6 +339,7 @@ function removeTaskFromLocalStorage(taskId) {
 
 function saveToLocalStorage(saveData) {
   savedFromLocalStorage = getSaveFromLocalStorage();
+  console.log(savedFromLocalStorage);
 
   savedFromLocalStorage.push(saveData);
 
