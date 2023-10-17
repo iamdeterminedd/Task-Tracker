@@ -1,6 +1,8 @@
 const form = document.getElementById('task-form');
 const input = document.getElementById('task-input');
 const taskList = document.getElementById('task-list');
+let tasks = [];
+let savedFromLocalStorage = [];
 
 function displayAllSavedTasks() {
   const savedFromLocalStorage = getSaveFromLocalStorage();
@@ -12,6 +14,10 @@ function addNewTaskSubmit(e) {
   const value = input.value;
 
   if (!value) return;
+
+  // const newTask ={
+  //   id:
+  // }
 
   addNewTaskToDisplay(value);
   saveToLocalStorage(value);
@@ -53,6 +59,16 @@ function createIcon(classes) {
   return icon;
 }
 
+function moveTask(taskId, newStatus, newPosition) {
+  const taskIndex = tasks.findIndex((task) => task.id == taskId);
+
+  if (taskIndex !== -1) {
+    const movedTask = tasks.splice(taskIndex, 1)[0];
+    tasks.splice(newPosition, 0, movedTask);
+    movedTask.status = newStatus;
+  }
+}
+
 function onClickTask(e) {
   if (e.target.parentElement.classList.contains('remove-task')) {
     removeTask(e.target.parentElement.parentElement);
@@ -74,7 +90,7 @@ function removeTaskFromLocalStorage(removeTask) {
 }
 
 function saveToLocalStorage(saveData) {
-  let savedFromLocalStorage = getSaveFromLocalStorage();
+  savedFromLocalStorage = getSaveFromLocalStorage();
 
   savedFromLocalStorage.push(saveData);
 
@@ -82,8 +98,6 @@ function saveToLocalStorage(saveData) {
 }
 
 function getSaveFromLocalStorage() {
-  let savedFromLocalStorage;
-
   if (localStorage.getItem('tasks') === null) {
     savedFromLocalStorage = [];
   } else {
