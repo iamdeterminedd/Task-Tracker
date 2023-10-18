@@ -5,7 +5,6 @@ const doingHeading = document.querySelector('.doing .heading').textContent;
 const doneHeading = document.querySelector('.done .heading').textContent;
 const form = document.getElementById('task-form');
 const input = document.getElementById('task-input');
-// const taskList = document.getElementById('task-list');
 const taskList = document.querySelectorAll('#task-list');
 let savedFromLocalStorage = [];
 
@@ -82,8 +81,6 @@ function getPositionInList(zone, mouseY) {
 }
 
 function getStatusFromZOne(zone) {
-  console.log(zone.className);
-
   switch (true) {
     case zone.className === 'task-column todo':
       console.log('Detected zone: ToDo');
@@ -96,7 +93,7 @@ function getStatusFromZOne(zone) {
       return 'Done';
     default:
       console.error('Unknown zone:', zone);
-      return ''; // or throw an error if this is unexpected
+      return '';
   }
 }
 
@@ -194,14 +191,7 @@ function moveTask(taskId, newStatus, newPosition) {
     movedTask.status = newStatus;
 
     saveToLocalStorage(movedTask);
-    console.log(movedTask);
   }
-
-  console.log('Move Task Called');
-
-  console.log('Task ID:', taskId);
-  console.log('New Status:', newStatus);
-  console.log('New Position:', newPosition);
 }
 
 function onClickTask(e) {
@@ -220,51 +210,15 @@ function removeTask(removeTask) {
 }
 
 function removeTaskFromLocalStorage(taskId) {
-  // const taskText = taskId.textContent.trim();
-  // let taskFromLocalStorage = getSaveFromLocalStorage();
-  // console.log(taskText);
-  console.log(taskId);
-  console.log(savedFromLocalStorage);
-  //savedFromLocalStorage = savedFromLocalStorage.filter((i) => i !== taskId);
-  // savedFromLocalStorage = savedFromLocalStorage.filter(
-  //   (i) => i.value !== taskId
-  // );
   let index = savedFromLocalStorage.findIndex((i) => i.value === taskId);
-  console.log(index);
-  // console.log(savedFromLocalStorage);
 
   if (index !== -1) {
     savedFromLocalStorage.splice(index, 1);
     localStorage.setItem('tasks', JSON.stringify(savedFromLocalStorage));
-    console.log('hello');
   }
-
-  // const taskIndex = savedFromLocalStorage.findIndex(
-  //   (task) => task === parseInt(taskText)
-  // );
-  // let index = savedFromLocalStorage.findIndex((i) => i === taskText);
-
-  // console.log(index);
-
-  // if (index !== -1) {
-  //   savedFromLocalStorage.splice(index, 1);
-  //   localStorage.setItem('tasks', JSON.stringify(savedFromLocalStorage));
-  // }
-
-  // console.log(taskId);
-  // savedFromLocalStorage = savedFromLocalStorage.filter(
-  //   (task) => task.id !== parseInt(taskId)
-  // );
-
-  // console.log(savedFromLocalStorage);
 }
 
 function saveToLocalStorage() {
-  // savedFromLocalStorage = getSaveFromLocalStorage();
-  // console.log(savedFromLocalStorage);
-
-  // savedFromLocalStorage.push(saveData);
-
   localStorage.setItem('tasks', JSON.stringify(savedFromLocalStorage));
 }
 
@@ -275,17 +229,8 @@ function getSaveFromLocalStorage() {
     savedFromLocalStorage = JSON.parse(storedData);
     addNewTaskToDisplay();
   }
-  // if (localStorage.getItem('tasks') === null) {
-  //   savedFromLocalStorage = [];
-  // } else {
-  //   savedFromLocalStorage = JSON.parse(localStorage.getItem('tasks'));
-  // }
-
-  // return savedFromLocalStorage;
 }
 
 getSaveFromLocalStorage();
 
 form.addEventListener('submit', addNewTaskSubmit);
-// taskList.addEventListener('click', onClickTask);
-// document.addEventListener('DOMContentLoaded', displayAllSavedTasks);
