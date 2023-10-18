@@ -207,10 +207,10 @@ function onClickTask(e) {
 
 function removeTask(removeTask) {
   if (confirm('Are you sure?')) {
-    // const taskId = removeTask.innerText.trim();
+    const content = removeTask.innerText.trim();
 
     removeTask.remove();
-    removeTaskFromLocalStorage('jogging');
+    removeTaskFromLocalStorage(content);
   }
 }
 
