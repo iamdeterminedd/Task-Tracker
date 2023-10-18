@@ -226,15 +226,15 @@ function removeTaskFromLocalStorage(taskId) {
   console.log(taskId);
   console.log(savedFromLocalStorage);
   //savedFromLocalStorage = savedFromLocalStorage.filter((i) => i !== taskId);
-  savedFromLocalStorage = savedFromLocalStorage.filter(
-    (i) => i.value !== taskId
-  ); //* excluding taskId value and creating new array named index(before some excluded)
-  // let index = savedFromLocalStorage.findIndex((i) => i == taskId);
-  // console.log(index);
-  console.log(savedFromLocalStorage);
+  // savedFromLocalStorage = savedFromLocalStorage.filter(
+  //   (i) => i.value !== taskId
+  // );
+  let index = savedFromLocalStorage.findIndex((i) => i.value === taskId);
+  console.log(index);
+  // console.log(savedFromLocalStorage);
 
-  if (savedFromLocalStorage !== -1) {
-    // savedFromLocalStorage.splice(index, 1);
+  if (index !== -1) {
+    savedFromLocalStorage.splice(index, 1);
     localStorage.setItem('tasks', JSON.stringify(savedFromLocalStorage));
     console.log('hello');
   }
