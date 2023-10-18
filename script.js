@@ -5,8 +5,14 @@ const doingHeading = document.querySelector('.doing .heading').textContent;
 const doneHeading = document.querySelector('.done .heading').textContent;
 const form = document.getElementById('task-form');
 const input = document.getElementById('task-input');
-const taskList = document.getElementById('task-list');
+const taskList = document.querySelectorAll('#task-list');
 let savedFromLocalStorage = [];
+
+let try1 = { id: 3, value: 'shopping', status: 'ToDo' };
+
+taskList.forEach((list) => {
+  list.addEventListener('click', onClickTask);
+});
 
 draggables.forEach((task) => {
   task.addEventListener('dragstart', () => {
@@ -75,8 +81,6 @@ function getPositionInList(zone, mouseY) {
 }
 
 function getStatusFromZOne(zone) {
-  console.log(zone.className);
-
   switch (true) {
     case zone.className === 'task-column todo':
       console.log('Detected zone: ToDo');
@@ -89,7 +93,7 @@ function getStatusFromZOne(zone) {
       return 'Done';
     default:
       console.error('Unknown zone:', zone);
-      return ''; // or throw an error if this is unexpected
+      return '';
   }
 }
 
@@ -187,14 +191,7 @@ function moveTask(taskId, newStatus, newPosition) {
     movedTask.status = newStatus;
 
     saveToLocalStorage(movedTask);
-    console.log(movedTask);
   }
-
-  console.log('Move Task Called');
-
-  console.log('Task ID:', taskId);
-  console.log('New Status:', newStatus);
-  console.log('New Position:', newPosition);
 }
 
 function onClickTask(e) {
@@ -205,19 +202,18 @@ function onClickTask(e) {
 
 function removeTask(removeTask) {
   if (confirm('Are you sure?')) {
-    const taskId = removeTask.innerText.trim();
+    const content = removeTask.innerText.trim();
+
     removeTask.remove();
-    removeTaskFromLocalStorage(taskId);
+    removeTaskFromLocalStorage(content);
   }
 }
 
 function removeTaskFromLocalStorage(taskId) {
-  const taskIndex = savedFromLocalStorage.findIndex(
-    (task) => task.id === parseInt(taskId)
-  );
+  let index = savedFromLocalStorage.findIndex((i) => i.value === taskId);
 
-  if (taskIndex !== -1) {
-    savedFromLocalStorage.splice(taskIndex, 1);
+  if (index !== -1) {
+    savedFromLocalStorage.splice(index, 1);
     localStorage.setItem('tasks', JSON.stringify(savedFromLocalStorage));
   }
 }
@@ -238,4 +234,3 @@ function getSaveFromLocalStorage() {
 getSaveFromLocalStorage();
 
 form.addEventListener('submit', addNewTaskSubmit);
-taskList.addEventListener('click', onClickTask);
