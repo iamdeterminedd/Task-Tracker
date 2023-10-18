@@ -8,6 +8,8 @@ const input = document.getElementById('task-input');
 const taskList = document.getElementById('task-list');
 let savedFromLocalStorage = [];
 
+let try1 = { id: 3, value: 'shopping', status: 'ToDo' };
+
 draggables.forEach((task) => {
   task.addEventListener('dragstart', () => {
     task.classList.add('is-dragging');
@@ -205,24 +207,59 @@ function onClickTask(e) {
 
 function removeTask(removeTask) {
   if (confirm('Are you sure?')) {
-    const taskId = removeTask.innerText.trim();
+    // const taskId = removeTask.innerText.trim();
+
     removeTask.remove();
-    removeTaskFromLocalStorage(taskId);
+    removeTaskFromLocalStorage('jogging');
   }
 }
 
 function removeTaskFromLocalStorage(taskId) {
-  const taskIndex = savedFromLocalStorage.findIndex(
-    (task) => task.id === parseInt(taskId)
-  );
+  // const taskText = taskId.textContent.trim();
+  // let taskFromLocalStorage = getSaveFromLocalStorage();
+  // console.log(taskText);
+  console.log(taskId);
+  console.log(savedFromLocalStorage);
+  //savedFromLocalStorage = savedFromLocalStorage.filter((i) => i !== taskId);
+  savedFromLocalStorage = savedFromLocalStorage.filter(
+    (i) => i.value !== taskId
+  ); //* excluding taskId value and creating new array named index(before some excluded)
+  // let index = savedFromLocalStorage.findIndex((i) => i == taskId);
+  // console.log(index);
+  console.log(savedFromLocalStorage);
 
-  if (taskIndex !== -1) {
-    savedFromLocalStorage.splice(taskIndex, 1);
+  if (savedFromLocalStorage !== -1) {
+    // savedFromLocalStorage.splice(index, 1);
     localStorage.setItem('tasks', JSON.stringify(savedFromLocalStorage));
+    console.log('hello');
   }
+
+  // const taskIndex = savedFromLocalStorage.findIndex(
+  //   (task) => task === parseInt(taskText)
+  // );
+  // let index = savedFromLocalStorage.findIndex((i) => i === taskText);
+
+  // console.log(index);
+
+  // if (index !== -1) {
+  //   savedFromLocalStorage.splice(index, 1);
+  //   localStorage.setItem('tasks', JSON.stringify(savedFromLocalStorage));
+  // }
+
+  // console.log(taskId);
+  // savedFromLocalStorage = savedFromLocalStorage.filter(
+  //   (task) => task.id !== parseInt(taskId)
+  // );
+
+  // console.log(savedFromLocalStorage);
 }
 
 function saveToLocalStorage() {
+  // savedFromLocalStorage = getSaveFromLocalStorage();
+  // console.log(savedFromLocalStorage);
+
+  // savedFromLocalStorage.push(saveData);
+
   localStorage.setItem('tasks', JSON.stringify(savedFromLocalStorage));
 }
 
@@ -233,9 +270,17 @@ function getSaveFromLocalStorage() {
     savedFromLocalStorage = JSON.parse(storedData);
     addNewTaskToDisplay();
   }
+  // if (localStorage.getItem('tasks') === null) {
+  //   savedFromLocalStorage = [];
+  // } else {
+  //   savedFromLocalStorage = JSON.parse(localStorage.getItem('tasks'));
+  // }
+
+  // return savedFromLocalStorage;
 }
 
 getSaveFromLocalStorage();
 
 form.addEventListener('submit', addNewTaskSubmit);
 taskList.addEventListener('click', onClickTask);
+// document.addEventListener('DOMContentLoaded', displayAllSavedTasks);
