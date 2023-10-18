@@ -5,10 +5,15 @@ const doingHeading = document.querySelector('.doing .heading').textContent;
 const doneHeading = document.querySelector('.done .heading').textContent;
 const form = document.getElementById('task-form');
 const input = document.getElementById('task-input');
-const taskList = document.getElementById('task-list');
+// const taskList = document.getElementById('task-list');
+const taskList = document.querySelectorAll('#task-list');
 let savedFromLocalStorage = [];
 
 let try1 = { id: 3, value: 'shopping', status: 'ToDo' };
+
+taskList.forEach((list) => {
+  list.addEventListener('click', onClickTask);
+});
 
 draggables.forEach((task) => {
   task.addEventListener('dragstart', () => {
@@ -282,5 +287,5 @@ function getSaveFromLocalStorage() {
 getSaveFromLocalStorage();
 
 form.addEventListener('submit', addNewTaskSubmit);
-taskList.addEventListener('click', onClickTask);
+// taskList.addEventListener('click', onClickTask);
 // document.addEventListener('DOMContentLoaded', displayAllSavedTasks);
