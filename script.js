@@ -5,14 +5,7 @@ const doingHeading = document.querySelector('.doing .heading').textContent;
 const doneHeading = document.querySelector('.done .heading').textContent;
 const form = document.getElementById('task-form');
 const input = document.getElementById('task-input');
-const taskList = document.querySelectorAll('#task-list');
 let savedFromLocalStorage = [];
-
-let try1 = { id: 3, value: 'shopping', status: 'ToDo' };
-
-taskList.forEach((list) => {
-  list.addEventListener('click', onClickTask);
-});
 
 draggables.forEach((task) => {
   task.addEventListener('dragstart', () => {
@@ -180,13 +173,13 @@ function createIcon(classes) {
   return icon;
 }
 
-function drag(e, taskId) {
-  e.dataTransfer.setData('text/plain', taskId);
+function drag(e, taskID) {
+  e.dataTransfer.setData('text/plain', taskID);
 }
 
-function moveTask(taskId, newStatus, newPosition) {
+function moveTask(taskID, newStatus, newPosition) {
   const taskIndex = savedFromLocalStorage.findIndex(
-    (task) => task.id == taskId
+    (task) => task.id == taskID
   );
 
   if (taskIndex !== -1) {
@@ -198,26 +191,14 @@ function moveTask(taskId, newStatus, newPosition) {
   }
 }
 
-function onClickTask(e) {
-  // if (e.target.parentElement.classList.contains('remove-task')) {
-  //   removeTask(e.target.parentElement.parentElement);
-  // }
-}
-
-function removeTask(removeTask) {
+function removeTask(taskID) {
   if (confirm('Are you sure?')) {
-    // const content = removeTask.innerText.trim();
-
-    // removeTask.remove();
-    removeTaskFromLocalStorage(removeTask);
-    console.log(removeTask);
+    removeTaskFromLocalStorage(taskID);
   }
 }
 
-function removeTaskFromLocalStorage(taskId) {
-  // let index = savedFromLocalStorage.findIndex((i) => i.value === taskId);
-  let filteredArray = savedFromLocalStorage.filter((i) => i.id !== taskId);
-  // console.log(index);
+function removeTaskFromLocalStorage(taskID) {
+  let filteredArray = savedFromLocalStorage.filter((i) => i.id !== taskID);
   console.log(savedFromLocalStorage);
 
   if (filteredArray.length !== savedFromLocalStorage.length) {
