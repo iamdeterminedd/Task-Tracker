@@ -104,7 +104,7 @@ function addNewTaskSubmit(e) {
   if (!value) return;
 
   const newTask = {
-    id: savedFromLocalStorage.length + 1,
+    id: crypto.randomUUID(),
     value,
     status: 'ToDo',
   };
