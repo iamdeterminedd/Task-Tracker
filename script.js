@@ -147,6 +147,10 @@ function addNewTaskToDisplay() {
       label.classList.remove('is-dragging');
     });
 
+    label.addEventListener('click', () => {
+      removeTask(task.id);
+    });
+
     const column = columns[task.status];
 
     if (column) {
@@ -195,26 +199,30 @@ function moveTask(taskId, newStatus, newPosition) {
 }
 
 function onClickTask(e) {
-  if (e.target.parentElement.classList.contains('remove-task')) {
-    removeTask(e.target.parentElement.parentElement);
-  }
+  // if (e.target.parentElement.classList.contains('remove-task')) {
+  //   removeTask(e.target.parentElement.parentElement);
+  // }
 }
 
 function removeTask(removeTask) {
   if (confirm('Are you sure?')) {
-    const content = removeTask.innerText.trim();
+    // const content = removeTask.innerText.trim();
 
-    removeTask.remove();
-    removeTaskFromLocalStorage(content);
+    // removeTask.remove();
+    removeTaskFromLocalStorage(removeTask);
+    console.log(removeTask);
   }
 }
 
 function removeTaskFromLocalStorage(taskId) {
-  let index = savedFromLocalStorage.findIndex((i) => i.value === taskId);
+  // let index = savedFromLocalStorage.findIndex((i) => i.value === taskId);
+  let filteredArray = savedFromLocalStorage.filter((i) => i.id !== taskId);
+  // console.log(index);
+  console.log(savedFromLocalStorage);
 
-  if (index !== -1) {
-    savedFromLocalStorage.splice(index, 1);
-    localStorage.setItem('tasks', JSON.stringify(savedFromLocalStorage));
+  if (filteredArray.length !== savedFromLocalStorage.length) {
+    localStorage.setItem('tasks', JSON.stringify(filteredArray));
+    getSaveFromLocalStorage();
   }
 }
 
