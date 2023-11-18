@@ -199,7 +199,6 @@ function removeTask(taskID) {
 
 function removeTaskFromLocalStorage(taskID) {
   let filteredArray = savedFromLocalStorage.filter((i) => i.id !== taskID);
-  console.log(savedFromLocalStorage);
 
   if (filteredArray.length !== savedFromLocalStorage.length) {
     localStorage.setItem('tasks', JSON.stringify(filteredArray));
